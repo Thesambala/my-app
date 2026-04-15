@@ -1,0 +1,181 @@
+@import '../../styles/colors.scss';
+
+.produk {
+    min-height: 100vh;
+    background-color: map-get($schema, color-background);
+}
+
+// Hero Section
+.hero {
+    background: linear-gradient(135deg, map-get($schema, color-primary) 0%, darken(map-get($schema, color-primary), 15%) 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+
+    &__container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    &__title {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+        }
+    }
+
+    &__subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+
+        @media (max-width: 768px) {
+            font-size: 1rem;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    &__button {
+        padding: 0.875rem 2rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &--primary {
+            background-color: white;
+            color: map-get($schema, color-primary);
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        &--secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+    }
+}
+
+// Main Section
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+
+    &__header {
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: map-get($schema, color-text);
+        margin-bottom: 0.5rem;
+    }
+
+    &__description {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    &__card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    &__cardImage {
+        width: 100%;
+        height: 200px;
+        background-color: map-get($schema, color-background);
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: map-get($schema, color-primary);
+    }
+
+    &__cardTitle {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: map-get($schema, color-text);
+        margin-bottom: 0.5rem;
+    }
+
+    &__cardDescription {
+        font-size: 0.875rem;
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+
+    &__cardPrice {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: map-get($schema, color-primary);
+        margin-bottom: 1rem;
+    }
+
+    &__cardButton {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: map-get($schema, color-primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken(map-get($schema, color-primary), 10%);
+        }
+    }
+}
+
+// Loading State
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.25rem;
+    color: map-get($schema, color-text);
+}

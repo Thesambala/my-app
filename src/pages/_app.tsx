@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import AppShell from "@/components/layouts/navbar/Appshell";
+import AppShell from "@/components/layouts/Appshell";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

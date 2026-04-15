@@ -1,0 +1,151 @@
+@import '../../../styles/colors.scss';
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: map-get($map: $schema, $key: color-background);
+
+    &__container {
+        width: 100%;
+        max-width: 450px;
+        padding: 2.5rem;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: map-get($schema, color-text);
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    &__subtitle {
+        font-size: 0.875rem;
+        color: #666;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    &__formGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: map-get($schema, color-text);
+    }
+
+    &__input {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: map-get($schema, color-text);
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            outline: none;
+            border-color: map-get($schema, color-primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        &::placeholder {
+            color: #999;
+        }
+    }
+
+    &__button {
+        padding: 0.875rem;
+        background-color: map-get($schema, color-primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 0.5rem;
+
+        &:hover {
+            background-color: darken(map-get($schema, color-primary), 10%);
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+
+    &__divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+        color: #666;
+        font-size: 0.875rem;
+
+        &::before,
+        &::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        &::before {
+            margin-right: 1rem;
+        }
+
+        &::after {
+            margin-left: 1rem;
+        }
+    }
+
+    &__link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: map-get($schema, color-text);
+        font-size: 0.875rem;
+
+        a {
+            color: map-get($schema, color-primary);
+            text-decoration: none;
+            font-weight: 600;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__error {
+        padding: 0.75rem;
+        background-color: lighten(map-get($schema, color-accent), 40%);
+        color: map-get($schema, color-accent);
+        border-radius: 4px;
+        font-size: 0.875rem;
+        border-left: 4px solid map-get($schema, color-accent);
+    }
+
+    &__success {
+        padding: 0.75rem;
+        background-color: lighten(map-get($schema, color-secondary), 40%);
+        color: darken(map-get($schema, color-secondary), 20%);
+        border-radius: 4px;
+        font-size: 0.875rem;
+        border-left: 4px solid map-get($schema, color-secondary);
+    }
+}

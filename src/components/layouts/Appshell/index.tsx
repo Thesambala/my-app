@@ -1,4 +1,8 @@
+import { useRouter } from "next/router";
 import Navbar from "@/components/layouts/navbar";
+
+// 1. Buat daftar hitam (blacklist) untuk halaman yang TIDAK boleh ada Navbar
+const disableNavbar = ["/auth/login", "/auth/register"];
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -6,10 +10,13 @@ type AppShellProps = {
 
 const AppShell = (props: AppShellProps) => {
   const { children } = props;
+  const { pathname } = useRouter(); // 2. Ambil info URL yang sedang dibuka saat ini
+
   return (
     <div>
       <header>
-        <Navbar />
+        {/* 3. Navbar hanya dimunculkan jika URL saat ini TIDAK ada di dalam daftar disableNavbar */}
+        {!disableNavbar.includes(pathname) && <Navbar />}
       </header>
       
       <main>
