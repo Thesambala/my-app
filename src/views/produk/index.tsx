@@ -4,22 +4,57 @@ import HeroSection from "./HeroSection";
 import MainSection from "./MainSection";
 import styles from './produk.module.scss';
 
+type ProductType = {
+  id: string;
+  nama: string;
+  harga: number;
+  ukuran: string;
+  warna: string;
+  category: string;
+};
+
 const TampilanProduk = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(false);
 
+  // useEffect untuk cek login - di-comment
+  // useEffect(() => {
+  //   const statusLogin = localStorage.getItem("isLoggedIn");
+  //   if (!statusLogin) {
+  //     router.replace("/auth/login");
+  //   } else {
+  //     setIsLogin(true);
+  //   }
+  // }, [router]);
+
+  // Fungsi untuk fetch data produk
+  const fetchProducts = () => {
+    setLoading(true);
+    fetch("/api/produk")
+      .then((response) => response.json())
+      .then((responsedata) => {
+        setProducts(responsedata.data);
+        console.log("Data produk:", responsedata.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching produk:", error);
+        setLoading(false);
+      });
+  };
+
+  // useEffect untuk fetch data produk saat pertama kali load
   useEffect(() => {
-    // Cek apakah user sudah login
-    const statusLogin = localStorage.getItem("isLoggedIn");
+    fetchProducts();
+  }, []);
 
-    // Redirect otomatis jika belum login
-    if (!statusLogin) {
-      router.replace("/auth/login");
-    } else {
-      // Jika sudah login, izinkan halaman ditampilkan
-      setIsLogin(true);
-    }
-  }, [router]);
+  // Fungsi untuk refresh data
+  const handleRefresh = () => {
+    console.log("Refreshing data...");
+    fetchProducts();
+  };
 
   // Fungsi untuk logout
   const handleLogout = () => {
@@ -28,14 +63,67 @@ const TampilanProduk = () => {
   };
 
   // Tampilkan loading saat mengecek status login
-  if (!isLogin) {
-    return <div className={styles.loading}>Memeriksa akses keamanan...</div>;
-  }
+  // if (!isLogin) {
+  //   return <div className={styles.loading}>Memeriksa akses keamanan...</div>;
+  // }
 
   return (
     <div className={styles.produk}>
       <HeroSection onLogout={handleLogout} />
-      <MainSection />
+      <div style={{ padding: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <h1>Daftar Produk</h1>
+          <button 
+            onClick={handleRefresh}
+            disabled={loading}
+            style={{
+              padding: '0.75rem 1.5rem',
+              backgroundColor: loading ? '#ccc' : '#3498db',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              fontSize: '1rem',
+              fontWeight: '600',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              transition: 'background-color 0.3s ease'
+            }}
+          >
+            {loading ? 'Loading...' : '🔄 Refresh Data'}
+          </button>
+        </div>
+
+        {loading && products.length === 0 ? (
+          <p>Memuat data...</p>
+        ) : (
+          <div style={{ display: 'grid', gap: '1rem' }}>
+            {products.map((product: ProductType) => (
+              <div 
+                key={product.id}
+                style={{
+                  padding: '1.5rem',
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                }}
+              >
+                <h2 style={{ marginBottom: '0.5rem', fontSize: '1.5rem' }}>{product.nama}</h2>
+                <p style={{ color: '#666', marginBottom: '0.25rem' }}>
+                  <strong>Kategori:</strong> {product.category}
+                </p>
+                <p style={{ color: '#3498db', fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.25rem' }}>
+                  Harga: Rp {product.harga.toLocaleString('id-ID')}
+                </p>
+                <p style={{ color: '#666', marginBottom: '0.25rem' }}>
+                  <strong>Ukuran:</strong> {product.ukuran}
+                </p>
+                <p style={{ color: '#666' }}>
+                  <strong>Warna:</strong> {product.warna}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

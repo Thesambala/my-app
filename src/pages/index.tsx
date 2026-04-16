@@ -10,10 +10,14 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <div>
+      <Head>
+        <title>Praktikum Next.js Pages Router</title>
+      </Head>
+      
       {/* Jika kamu ingin memunculkan Navbar, kamu bisa uncomment baris di bawah ini */}
       {/* <Navbar /> */}
       
-      <h1>Praktikum Next.js Pages Route</h1> <br />
+      <h1>Praktikum Next.js Pages Router</h1> <br />
       <p>Mahasiswa D4 Pengembangan Web</p>
 
       {/* 2. Tambahkan block navigasi di bawah sini */}
