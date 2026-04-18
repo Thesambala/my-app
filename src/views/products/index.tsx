@@ -1,12 +1,5 @@
 import styles from "../produk/produk.module.scss";
-
-type ProductType = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-};
+import { ProductType } from "../../pages/types/Product.type";
 
 const TampilanProduk = ({ products }: { products: ProductType[] }) => {
   // Render multiple skeletons saat loading

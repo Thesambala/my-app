@@ -1,18 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type Product = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  image: string;
-};
+import { ProductType } from "../types/Product.type";
 
 type Data = {
   status: boolean;
   status_code: number;
-  data: Product[];
+  data: ProductType[];
 };
 
 export default function handler(
@@ -20,7 +13,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   // Data produk dengan field lengkap: id, name, category, price, image
-  const data: Product[] = [
+  const data: ProductType[] = [
     {
       id: "1",
       name: "Sepatu Duramo SL",
