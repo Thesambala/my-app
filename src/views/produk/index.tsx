@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import HeroSection from "./HeroSection";
 import MainSection from "./MainSection";
 import styles from './produk.module.scss';
+import useSWR from "swr";
+import fetcher from "../../utils/swr/fetcher";
 
 type ProductType = {
   id: string;
@@ -16,8 +18,9 @@ type ProductType = {
 const TampilanProduk = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState(false);
+
+  // Menggunakan SWR untuk fetch data
+  const { data, error, isLoading, mutate } = useSWR("/api/produk", fetcher);
 
   // useEffect untuk cek login - di-comment
   // useEffect(() => {
@@ -29,31 +32,10 @@ const TampilanProduk = () => {
   //   }
   // }, [router]);
 
-  // Fungsi untuk fetch data produk
-  const fetchProducts = () => {
-    setLoading(true);
-    fetch("/api/produk")
-      .then((response) => response.json())
-      .then((responsedata) => {
-        setProducts(responsedata.data);
-        console.log("Data produk:", responsedata.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching produk:", error);
-        setLoading(false);
-      });
-  };
-
-  // useEffect untuk fetch data produk saat pertama kali load
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  // Fungsi untuk refresh data
+  // Fungsi untuk refresh data menggunakan mutate dari SWR
   const handleRefresh = () => {
     console.log("Refreshing data...");
-    fetchProducts();
+    mutate(); // SWR akan re-fetch data
   };
 
   // Fungsi untuk logout
@@ -67,6 +49,9 @@ const TampilanProduk = () => {
   //   return <div className={styles.loading}>Memeriksa akses keamanan...</div>;
   // }
 
+  // Get products dari data SWR
+  const products = data?.data || [];
+
   return (
     <div className={styles.produk}>
       <HeroSection onLogout={handleLogout} />
@@ -75,24 +60,30 @@ const TampilanProduk = () => {
           <h1>Daftar Produk</h1>
           <button 
             onClick={handleRefresh}
-            disabled={loading}
+            disabled={isLoading}
             style={{
               padding: '0.75rem 1.5rem',
-              backgroundColor: loading ? '#ccc' : '#3498db',
+              backgroundColor: isLoading ? '#ccc' : '#3498db',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
               fontSize: '1rem',
               fontWeight: '600',
-              cursor: loading ? 'not-allowed' : 'pointer',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
               transition: 'background-color 0.3s ease'
             }}
           >
-            {loading ? 'Loading...' : '🔄 Refresh Data'}
+            {isLoading ? 'Loading...' : '🔄 Refresh Data'}
           </button>
         </div>
 
-        {loading && products.length === 0 ? (
+        {error && (
+          <p style={{ color: 'red', padding: '1rem', backgroundColor: '#fee', borderRadius: '4px' }}>
+            Error loading data: {error.message}
+          </p>
+        )}
+
+        {isLoading && products.length === 0 ? (
           <p>Memuat data...</p>
         ) : (
           <div style={{ display: 'grid', gap: '1rem' }}>

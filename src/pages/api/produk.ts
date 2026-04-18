@@ -1,41 +1,60 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
+type Product = {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  image: string;
+};
+
 type Data = {
   status: boolean;
   status_code: number;
-  data: any[];
+  data: Product[];
 };
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // Data statis untuk testing
-  const data = [
+  // Data produk dengan field lengkap: id, name, category, price, image
+  const data: Product[] = [
     {
       id: "1",
-      nama: "Kaos Polos",
-      harga: 10000,
-      ukuran: "L",
-      warna: "merah",
-      category: "Pakaian Pria"
+      name: "Sepatu Duramo SL",
+      category: "Men's Shoes",
+      price: 900000,
+      image: "/sepatu-duramo.svg"
     },
     {
       id: "2",
-      nama: "Kaos Berlengan Panjang",
-      harga: 15000,
-      ukuran: "M",
-      warna: "biru",
-      category: "Pakaian Pria"
+      name: "Sepatu Samba OG",
+      category: "Men's Shoes",
+      price: 2000000,
+      image: "/sepatu-samba.svg"
     },
     {
       id: "3",
-      nama: "Kaos Bergambar",
-      harga: 20000,
-      ukuran: "XL",
-      warna: "hitam",
-      category: "Pakaian Casual"
+      name: "Kaos Bergambar",
+      category: "Pakaian Casual",
+      price: 20000,
+      image: "/kaos.svg"
+    },
+    {
+      id: "4",
+      name: "Kemeja Formal",
+      category: "Pakaian Formal",
+      price: 50000,
+      image: "/kemeja.svg"
+    },
+    {
+      id: "5",
+      name: "Jaket Hoodie",
+      category: "Pakaian Casual",
+      price: 75000,
+      image: "/jaket.svg"
     }
   ];
 
