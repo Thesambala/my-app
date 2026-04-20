@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import TampilanProduk from "../../views/products";
-import fetcher from "../../utils/swr/fetcher";
-import { ProductType } from "../types/Product.type";
+import TampilanProduk from "../../../views/products";
+import { ProductType } from "../../types/Product.type";
+
+// Fetcher untuk API produk (data terbaru)
+const fetcher = (url: string) => 
+  fetch(url).then((res) => res.json()).then((data) => data.data);
 
 const ProductsCSRPage = () => {
-  // Menggunakan SWR untuk Client-Side Rendering
+  // Menggunakan SWR untuk Client-Side Rendering dengan data terbaru
   const { data, error, isLoading } = useSWR("/api/produk", fetcher);
 
   // Get products dari data SWR
-  const products: ProductType[] = data?.data || [];
+  const products: ProductType[] = data || [];
 
   return (
     <div>
@@ -31,7 +34,7 @@ const ProductsCSRPage = () => {
           fontSize: '1rem',
           margin: 0
         }}>
-          Data di-fetch di browser menggunakan SWR. Skeleton loading akan muncul saat refresh.
+          Data di-fetch di browser menggunakan SWR. Data terbaru akan muncul. Skeleton loading akan muncul saat refresh.
         </p>
       </div>
       

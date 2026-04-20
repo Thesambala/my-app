@@ -1,5 +1,5 @@
-import TampilanProduk from "../../views/products";
-import { ProductType } from "../types/Product.type";
+import TampilanProduk from "../../../views/products";
+import { ProductType } from "../../types/Product.type";
 
 const halamanProdukServer = (props: { products: ProductType[] }) => {
   const { products } = props;
@@ -23,7 +23,7 @@ const halamanProdukServer = (props: { products: ProductType[] }) => {
           fontSize: '1rem',
           margin: 0
         }}>
-          Data di-fetch di server menggunakan getServerSideProps. Tidak ada skeleton loading.
+          Data di-fetch di server menggunakan getServerSideProps. Data terbaru akan muncul. Tidak ada skeleton loading.
         </p>
       </div>
       <TampilanProduk products={products} />
@@ -33,14 +33,23 @@ const halamanProdukServer = (props: { products: ProductType[] }) => {
 
 export default halamanProdukServer;
 
-// Fungsi getServerSideProps akan dipanggil setiap kali halaman ini diakses, dan akan mengambil data produk dari API sebelum merender halaman.
+// Fungsi getServerSideProps akan dipanggil setiap kali halaman ini diakses, dan akan mengambil data produk terbaru dari API sebelum merender halaman.
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/produk");
-  const response = await res.json();
-  // console.log("Data produk yang diambil dari API:", response);
-  return {
-    props: {
-      products: response.data, // Pastikan untuk memberikan nilai default jika data tidak tersedia
-    },
-  };
+  try {
+    const res = await fetch("http://localhost:3000/api/produk");
+    const response = await res.json();
+    // console.log("Data produk yang diambil dari API:", response);
+    return {
+      props: {
+        products: response.data || [], // Pastikan untuk memberikan nilai default jika data tidak tersedia
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching products from API:", error);
+    return {
+      props: {
+        products: [],
+      },
+    };
+  }
 }

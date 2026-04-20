@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import Navbar from "@/components/layouts/navbar";
+import Navbar from "../navbar";
 
 // 1. Buat daftar hitam (blacklist) untuk halaman yang TIDAK boleh ada Navbar
 const disableNavbar = ["/auth/login", "/auth/register"];

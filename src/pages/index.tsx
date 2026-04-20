@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import Navbar from "@/components/layouts/navbar";
+import styles from "../../styles/Home.module.css";
+import Navbar from "../components/layouts/navbar";
 import Link from "next/link"; // 1. Tambahkan import Link di sini
 
 const inter = Inter({ subsets: ["latin"] });
