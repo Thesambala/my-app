@@ -1,7 +1,8 @@
 import styles from "../produk/produk.module.scss";
 import { ProductType } from "../../src/types/Product.type";
+import Link from "next/link";
 
-const TampilanProduk = ({ products }: { products: ProductType[] }) => {
+const TampilanProduk = ({ products, basePath = "/produk" }: { products: ProductType[], basePath?: string }) => {
   // Render multiple skeletons saat loading
   const renderSkeletons = () => {
     return Array.from({ length: 6 }).map((_, index) => (
@@ -20,21 +21,21 @@ const TampilanProduk = ({ products }: { products: ProductType[] }) => {
       <div className={styles.produk__content}>
         {products.length > 0 ? (
           <>
-            {products.map((product: ProductType) => (
-              <div key={product.id} className={styles.produk__content__item}>
+            {products.map((products: ProductType) => (
+              <Link href={`${basePath}/${products.id}`} key={products.id} className={styles.produk__content__item}>
                 <div className={styles.produk__content__item__image}>
-                  <img src={product.image} alt={product.name} width={200} />
+                  <img src={products.image} alt={products.name} width={200} />
                 </div>
                 <h4 className={styles.produk__content__item__name}>
-                  {product.name}
+                  {products.name}
                 </h4>
                 <p className={styles.produk__content__item__category}>
-                  {product.category}
+                  {products.category}
                 </p>
                 <p className={styles.produk__content__item__price}>
-                  Rp {product.price.toLocaleString()}
+                  Rp {products.price.toLocaleString("id-ID")}
                 </p>
-              </div>
+              </Link>
             ))}
           </>
         ) : (
